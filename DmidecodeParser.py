@@ -1,1 +1,0 @@
-system_info = open("bg7.txt")
