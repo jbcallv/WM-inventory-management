@@ -1,3 +1,5 @@
+/* manual insertions created by team Six 
+for database with name *_small */
 insert into GPU values('123ABC', 'PNY', 'RTX2080TI', 11)
 insert into GPU values('123ABD', 'PNY', 'RTX2080TI', 11)
 insert into GPU values('123ABE', 'PNY', 'RTX2080TI', 11)
@@ -53,3 +55,8 @@ insert into Drives values(NULL, 8000, 'HDD', 'IDK')
 insert into Display values(NULL, 24, '1920X1080')
 insert into Display values(NULL, 27, '1920X1080')
 insert into Display values(NULL, 24, '1920X1080')
+
+insert into Computer values(NULL, )
+insert into Computer values(NULL, )
+insert into Computer values(NULL, )
+insert into Computer values(NULL, )
