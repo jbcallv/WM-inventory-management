@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS System;
+CREATE TABLE System (
+    id SERIAL PRIMARY KEY,
+    tag_id varchar(20)
+);
+
 DROP TABLE IF EXISTS Tag;
 CREATE TABLE Tag (
     id SERIAL PRIMARY KEY,
