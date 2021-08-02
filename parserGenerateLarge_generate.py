@@ -25,41 +25,46 @@ sql_file = open("parserGenerateLarge.sql", "a")
 
 def insert_GPU(system_info, i):
     # hard-coded this information as dmidecode contains no GPU information
-    pass
+    insertion = "\ninsert into GPU values('123ABC', 'PNY', 'RTX2080TI', 11)\n\
+insert into GPU values(NULL, 'MSI' 'GTX1080Ti', 11)\n\
+insert into GPU values('128ABC', 'MSI' 'GTX1080Ti', 11)\n\
+insert into GPU values('802ASD', 'TITAN', 'RTX', 24)\n\n"
+    sql_file.writelines(insertion)
 
 
 def insert_memory(system_info, i):
-        # 22 values in memory value of bg7.txt
-        for j in range(1, 22):
-            info_line = system_info[i+j].strip()
-            #print(info_line)
+    # 22 values in memory value of bg7.txt
+    for j in range(1, 22):
+        info_line = system_info[i+j].strip()
+        #print(info_line)
 
-            if "Size" in info_line:
-                size = info_line.replace("Size:", "").replace("GB", "").strip()
-                if size == "No Module Installed":
-                    # replace entries with null value if they don't exist
-                    size = "NULL"
+        if "Size" in info_line:
+            size = info_line.replace("Size:", "").replace("GB", "").strip()
+            if size == "No Module Installed":
+                # replace entries with null value if they don't exist
+                size = "NULL"
 
-            if "Type" in info_line and "Type Detail" not in info_line: 
-                generation = info_line.replace("Type:", "").strip()
-                if generation == "Unknown":
-                    generation = "NULL"
+        if "Type" in info_line and "Type Detail" not in info_line: 
+            generation = info_line.replace("Type:", "").strip()
+            if generation == "Unknown":
+                generation = "NULL"
 
-            if "Speed" in info_line and "Configured Clock Speed" not in info_line:
-                # this is last value that gets written
-                speed = info_line.replace("Speed:", "").replace("MT/s", "").strip()
-                if speed == "Unknown":
-                    speed = "NULL"
+        if "Speed" in info_line and "Configured Clock Speed" not in info_line:
+            # this is last value that gets written
+            speed = info_line.replace("Speed:", "").replace("MT/s", "").strip()
+            if speed == "Unknown":
+                speed = "NULL"
 
-                # put insertion statements in *.sql file
-                insertion = "insert into Memory values (" + str(size) + ", " + "'" + str(generation) + "'" + ", " + str(speed) + ", " + "'" + str(form_factor) + "'" + ")\n"
-                # change insertion string here to convert NULL strings to NULL type
-                sql_file.writelines(insertion)
+            # put insertion statements in *.sql file
+            insertion = "insert into Memory values (" + str(size) + ", " + "'" + str(generation) + "'" + ", " + str(speed) + ", " + "'" + str(form_factor) + "'" + ")\n"
+            # change insertion string here to convert NULL strings to NULL type
+            sql_file.writelines(insertion)
 
-            if "Form Factor" in info_line:
-                form_factor = info_line.replace("Form Factor:", "").strip()
-                if form_factor == "Unknown":
-                    form_factor = "NULL"
+        if "Form Factor" in info_line:
+            form_factor = info_line.replace("Form Factor:", "").strip()
+            if form_factor == "Unknown":
+                form_factor = "NULL"
+
 
 def insert_CPU(system_info, i):
     # 58 total lines of CPU information
@@ -76,6 +81,7 @@ def insert_CPU(system_info, i):
 
         if "Core Count" in info_line:
             cores = info_line.replace("Core Count:", "").strip()
+
 
 def insert_motherboard(system_info, i):
     pass
@@ -98,6 +104,7 @@ def insert_PSU(system_info, i):
             insertion = "insert into PSU values (" + str(watts) + ")\n"
             sql_file.writelines(insertion)
 
+
 def insert_drives(system_info, i):
     # x lines of drive information
 
@@ -110,6 +117,10 @@ def insert_display(system_info, i):
 
 
 def driver():
+    # hard coded information needs to be inserted outside of for loop. Ask me how I learned.
+    # parameters still exist for expandability
+    insert_GPU(system_info, 1)
+
     for i in range(len(system_info)):
         line = system_info[i].strip()
         # parse and insert memory information
@@ -126,7 +137,6 @@ def driver():
 
 
 if __name__ == "__main__":
-    #get_memory()
     driver()
     f.close()
     sql_file.close()
