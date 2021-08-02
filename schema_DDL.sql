@@ -1,45 +1,75 @@
-CREATE TABLE [DROP TABLE IF EXISTS] GPU (
+DROP TABLE IF EXISTS Tag;
+CREATE TABLE Tag (
     id SERIAL PRIMARY KEY,
-    /* is this necessary since we have a location table that can be accessed using serial field? located_at  varchar(255) blah blah*/
+    vendor varchar(20),
+    purchase_price int,
+    purchase_date DATE NOT NULL DEFAULT CURRENT_DATE
+);
+
+DROP TABLE IF EXISTS Manufacturer;
+CREATE TABLE Manufacturer (
+    id SERIAL PRIMARY KEY,
+    manufacturer varchar(20),
+    /* there's a name field in the erd. Is this necessary? This table seems too short for it to be worth keeping */
+);
+
+DROP TABLE IF EXISTS Located;
+CREATE TABLE Located (
+    id SERIAL PRIMARY KEY,
+    building varchar(25),
+    room_number int
+);
+
+DROP TABLE IF EXISTS GPU;
+CREATE TABLE GPU (
+    id SERIAL PRIMARY KEY,
+    /* is this necessary since we have a location table that can be accessed using serial field? located varchar(255) blah blah*/
     tag_id varchar(20), 
     vram INT NOT NULL,
 );
 
-CREATE TABLE [DROP TABLE IF EXISTS] Memory (
+DROP TABLE IF EXISTS Memory;
+CREATE TABLE Memory (
     id SERIAL PRIMARY KEY,
     size int,
-    generation varchar(10),
-    speed int,
-    form_factor varchar(4)
+    type_generation varchar(10),
+    type_speed int,
+    type_form_factor varchar(4)
 );
 
-CREATE TABLE [DROP TABLE IF EXISTS] CPU (
+DROP TABLE IF EXISTS CPU;
+CREATE TABLE CPU (
     id SERIAL PRIMARY KEY,
     threads int,
     cores, int
 );
 
-CREATE TABLE [DROP TABLE IF EXISTS] Motherboard (
+DROP TABLE IF EXISTS Motherboard;
+CREATE TABLE Motherboard (
     id SERIAL PRIMARY KEY
 );
 
-CREATE TABLE [DROP TABLE IF EXISTS] NC (
+DROP TABLE IF EXISTS NC;
+CREATE TABLE NC (
     id SERIAL PRIMARY KEY
 );
 
-CREATE TABLE [DROP TABLE IF EXISTS] PSU (
+DROP TABLE IF EXISTS PSU;
+CREATE TABLE PSU (
     id SERIAL PRIMARY KEY,
     wattage int
 );
 
-CREATE TABLE [DROP TABLE IF EXISTS] Drives (
+DROP TABLE IF EXISTS Drives;
+CREATE TABLE Drives (
     id SERIAL PRIMARY KEY,
     size int,
     drive_type varchar(4),
     interface varchar(12)
 );
 
-CREATE TABLE [DROP TABLE IF EXISTS] Display (
+DROP TABLE IF EXISTS Display
+CREATE TABLE Display (
     id SERIAL PRIMARY KEY,
     size int,
     resolution varchar(10)
