@@ -38,11 +38,26 @@ CREATE TABLE Component (
     machine_id INT FOREIGN KEY,
     tag_id varchar(20) FOREIGN KEY
 );
-/* hello */ 
 
 DROP TABLE IF EXISTS GPU;
 CREATE TABLE GPU (
     id SERIAL PRIMARY KEY,
-    vram int,
-    model varchar(25)
+    machine_id INT FOREIGN KEY,
+    tag_id varchar(20) FOREIGN KEY
+    model varchar(25),
+    vram int
 );
+
+DROP TABLE IF EXISTS Memory;
+CREATE TABLE Memory (
+    id SERIAL PRIMARY KEY,
+    machine_id INT FOREIGN KEY,
+    tag_id varchar(20) FOREIGN KEY
+    model varchar(25)
+    size int,
+    type_generation varchar(5),  
+    type_speed int,
+    type_form_factor varchar(5),
+);
+
+
