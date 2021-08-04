@@ -52,12 +52,23 @@ DROP TABLE IF EXISTS Memory;
 CREATE TABLE Memory (
     id SERIAL PRIMARY KEY,
     machine_id INT FOREIGN KEY,
-    tag_id varchar(20) FOREIGN KEY
-    model varchar(25)
+    tag_id varchar(20) FOREIGN KEY,
+    model varchar(25),
     size int,
     type_generation varchar(5),  
     type_speed int,
     type_form_factor varchar(5),
 );
+
+DROP TABLE IF EXISTS CPU;
+CREATE TABLE CPU (
+    id SERIAL PRIMARY KEY,
+    machine_id INT FOREIGN KEY,
+    tag_id varchar(20) FOREIGN KEY,
+    model varchar(25),
+    threads int,
+    cores int
+);
+
 
 
