@@ -79,5 +79,12 @@ CREATE TABLE NC (
     model varchar(25)
 );
 
-
+DROP TABLE IF EXISTS PSU;
+CREATE TABLE PSU (
+    id SERIAL PRIMARY KEY,
+    machine_id INT FOREIGN KEY,
+    tag_id varchar(20) FOREIGN KEY,
+    model varchar(25),
+    wattage int
+);
 
