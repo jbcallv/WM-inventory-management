@@ -70,5 +70,13 @@ CREATE TABLE CPU (
     cores int
 );
 
+DROP TABLE IF EXISTS Motherboard;
+CREATE TABLE Motherboard (
+    id SERIAL PRIMARY KEY,
+    machine_id INT FOREIGN KEY,
+    tag_id varchar(20) FOREIGN KEY,
+    model varchar(25)
+);
+
 
 
