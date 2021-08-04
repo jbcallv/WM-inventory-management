@@ -32,10 +32,79 @@ CREATE TABLE Model (
     model_name varchar(25)
 );
 
-DROP TABLE IF EXISTS Component;
-CREATE TABLE Component (
+DROP TABLE IF EXISTS GPU;
+CREATE TABLE GPU (
     id SERIAL PRIMARY KEY,
     machine_id INT FOREIGN KEY,
     tag_id varchar(20) FOREIGN KEY
+    model varchar(25),
+    vram int
 );
 
+DROP TABLE IF EXISTS Memory;
+CREATE TABLE Memory (
+    id SERIAL PRIMARY KEY,
+    machine_id INT FOREIGN KEY,
+    tag_id varchar(20) FOREIGN KEY,
+    model varchar(25),
+    size int,
+    type_generation varchar(5),  
+    type_speed int,
+    type_form_factor varchar(5),
+);
+
+DROP TABLE IF EXISTS CPU;
+CREATE TABLE CPU (
+    id SERIAL PRIMARY KEY,
+    machine_id INT FOREIGN KEY,
+    tag_id varchar(20) FOREIGN KEY,
+    model varchar(25),
+    threads int,
+    cores int
+);
+
+DROP TABLE IF EXISTS Motherboard;
+CREATE TABLE Motherboard (
+    id SERIAL PRIMARY KEY,
+    machine_id INT FOREIGN KEY,
+    tag_id varchar(20) FOREIGN KEY,
+    model varchar(25)
+);
+
+DROP TABLE IF EXISTS NC;
+CREATE TABLE NC (
+    id SERIAL PRIMARY KEY,
+    machine_id INT FOREIGN KEY,
+    tag_id varchar(20) FOREIGN KEY,
+    model varchar(25)
+);
+
+DROP TABLE IF EXISTS PSU;
+CREATE TABLE PSU (
+    id SERIAL PRIMARY KEY,
+    machine_id INT FOREIGN KEY,
+    tag_id varchar(20) FOREIGN KEY,
+    model varchar(25),
+    wattage int
+);
+
+DROP TABLE IF EXISTS Drives;
+CREATE TABLE Drives (
+    id SERIAL PRIMARY KEY,
+    machine_id INT FOREIGN KEY,
+    tag_id varchar(20) FOREIGN KEY,
+    model varchar(25),
+    size int, 
+    d_type varchar(5),  /* type was a keyword, so changed to d_type(AKA drive type)*/
+    interface varchar(25) /* interface string formating not known, update later*/
+);
+
+DROP TABLE IF EXISTS Display;
+CREATE TABLE Display (
+    id SERIAL PRIMARY KEY,
+    machine_id INT FOREIGN KEY,
+    tag_id varchar(20) FOREIGN KEY,
+    model varchar(25),
+    size int,
+    resolution varchar(10)
+);
