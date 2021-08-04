@@ -39,3 +39,10 @@ CREATE TABLE Component (
     tag_id varchar(20) FOREIGN KEY
 );
 /* hello */ 
+
+DROP TABLE IF EXISTS GPU;
+CREATE TABLE GPU (
+    id SERIAL PRIMARY KEY,
+    vram int,
+    model varchar(25)
+);
