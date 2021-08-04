@@ -98,3 +98,13 @@ CREATE TABLE Drives (
     d_type varchar(5),  /* type was a keyword, so changed to d_type(AKA drive type)*/
     interface varchar(25) /* interface string formating not known, update later*/
 );
+
+DROP TABLE IF EXISTS Display;
+CREATE TABLE Display (
+    id SERIAL PRIMARY KEY,
+    machine_id INT FOREIGN KEY,
+    tag_id varchar(20) FOREIGN KEY,
+    model varchar(25),
+    size int,
+    resolution varchar(10)
+);
