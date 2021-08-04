@@ -32,13 +32,6 @@ CREATE TABLE Model (
     model_name varchar(25)
 );
 
-DROP TABLE IF EXISTS Component;
-CREATE TABLE Component (
-    id SERIAL PRIMARY KEY,
-    machine_id INT FOREIGN KEY,
-    tag_id varchar(20) FOREIGN KEY
-);
-
 DROP TABLE IF EXISTS GPU;
 CREATE TABLE GPU (
     id SERIAL PRIMARY KEY,
@@ -72,6 +65,14 @@ CREATE TABLE CPU (
 
 DROP TABLE IF EXISTS Motherboard;
 CREATE TABLE Motherboard (
+    id SERIAL PRIMARY KEY,
+    machine_id INT FOREIGN KEY,
+    tag_id varchar(20) FOREIGN KEY,
+    model varchar(25)
+);
+
+DROP TABLE IF EXISTS NC;
+CREATE TABLE NC (
     id SERIAL PRIMARY KEY,
     machine_id INT FOREIGN KEY,
     tag_id varchar(20) FOREIGN KEY,
