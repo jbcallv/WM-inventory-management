@@ -38,4 +38,4 @@ CREATE TABLE Component (
     machine_id INT FOREIGN KEY,
     tag_id varchar(20) FOREIGN KEY
 );
-
+/* hello */ 
