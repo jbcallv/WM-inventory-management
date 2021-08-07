@@ -1,3 +1,4 @@
+/* tag relation */
 DROP TABLE IF EXISTS tag;
 CREATE TABLE tag (
     tag_id varchar(8),
@@ -7,118 +8,98 @@ CREATE TABLE tag (
     PRIMARY KEY(tag_id)
 );
 
+/* manufacturer table */
 DROP TABLE IF EXISTS manufacturer;
-CREATE TABLE manufacturer (
+CREATE TABLE manufactuer (
     id SERIAL,
-    manufacturer_name varchar(20),
+    manufactuer_name varchar(20),
     PRIMARY KEY(id)
-    /* there's a name field in the erd. Is this necessary? This table seems too short for it to be worth keeping */
-    /* although it's short, if we don't have this table I think we violate BCNF. */
 );
 
+/* located_at table */
 DROP TABLE IF EXISTS located_at;
 CREATE TABLE located_at (
     id SERIAL,
     building varchar(25),
-    room_number int
+    room_number INT,
     PRIMARY KEY(id)
 );
 
-DROP TABLE IF EXISTS lachine;
+/* relationship between tag and component tables */
+DROP TABLE IF EXISTS tagged;
+CREATE TABLE tagged (
+    component_id INT,
+    tag_id INT,
+    FOREIGN KEY(component_id)
+        REFERENCES component(id),
+    FOREIGN KEY(tag_id)
+        REFERENCES tag(tag_id)
+);
+
+/* machine table */
+DROP TABLE IF EXISTS machine;
 CREATE TABLE machine (
     id SERIAL,
-    tag_id varchar(20)
-    PRIMARY KEY(id)
+    located_id INT,
+    PRIMARY KEY(id),
+    FOREIGN KEY(located_id)
+        REFERENCES located_at(id)
+); 
+
+/* relationship between machine and tag tables */
+DROP TABLE IF EXISTS m_tagged;
+CREATE TABLE m_tagged (
+    machine_id INT,
+    tag_id, INT,
+    FOREIGN KEY(machine_id)
+        REFERENCES machine(id),
+    FOREIGN KEY(tag_id)
+        REFERENCES tag(tag_id) 
 );
 
-DROP TABLE IF EXISTS model;
-CREATE TABLE model (
-    id SERIAL,
-    model_name varchar(25)
-    PRIMARY KEY(id)
+/* relationship between manufacturer and machine tables */
+DROP TABLE IF EXISTS m_made;
+CREATE TABLE m_made (
+    machine_id INT,
+    manufacturer_id INT,
+    FOREIGN KEY(machine_id)
+        REFERENCES machine(id),
+    FOREIGN KEY(manufacturer_id)
+        REFERENCES manufactuer(id)
 );
 
+/* should be the relationship between component and machine but component will not be a table so
+how should we go about doing this? */
+DROP TABLE IF EXISTS in_machine;
+CREATE TABLE in_machine (
+    part_id INT,
+    machine_id INT,
+    FOREIGN KEY(part_id)
+        REFERENCES /* THERE IS NOC OMPONENT TABLE SO HOW DO WE MAKKE IT REFERENCE EVERY PART (E.G. GPU) TABLE */,
+    FOREIGN KEY(machine_id)
+        REFERENCES machine(id)
+);
+
+/* gpu table */
 DROP TABLE IF EXISTS gpu;
 CREATE TABLE gpu (
     id SERIAL,
-    machine_id INT FOREIGN KEY,
-    tag_id varchar(20) FOREIGN KEY
-    model varchar(25),
-    vram int
+    model_name varchar(20),
+    located_id INT,
+    manufacturer_id INT,
     PRIMARY KEY(id)
+    FOREIGN KEY(model_name)
+        REFERENCES(gpu_model),
+    FOREIGN KEY(located_id)
+        REFERENCES located_at(id),
+    FOREIGN KEY(manufacturer_id)
+        REFERENCES manufactuer(id)
 );
 
-DROP TABLE IF EXISTS memory;
-CREATE TABLE memory (
-    id SERIAL,
-    machine_id INT FOREIGN KEY,
-    tag_id varchar(20) FOREIGN KEY,
-    model varchar(25),
-    size int,
-    type_generation varchar(5),  
-    type_speed int,
-    type_form_factor varchar(5),
-    PRIMARY KEY(id)
-);
-
-DROP TABLE IF EXISTS cpu;
-CREATE TABLE cpu (
-    id SERIAL,
-    machine_id INT FOREIGN KEY,
-    tag_id varchar(20) FOREIGN KEY,
-    model varchar(25),
-    threads int,
-    cores int
-    PRIMARY KEY(id)
-);
-
-DROP TABLE IF EXISTS motherboard;
-CREATE TABLE motherboard (
-    id SERIAL,
-    machine_id INT FOREIGN KEY,
-    tag_id varchar(20) FOREIGN KEY,
-    model varchar(25)
-    PRIMARY KEY(id)
-);
-
-DROP TABLE IF EXISTS nc;
-CREATE TABLE nc (
-    id SERIAL,
-    machine_id INT FOREIGN KEY,
-    tag_id varchar(20) FOREIGN KEY,
-    model varchar(25)
-    PRIMARY KEY(id)
-);
-
-DROP TABLE IF EXISTS psu;
-CREATE TABLE psu (
-    id SERIAL,
-    machine_id INT FOREIGN KEY,
-    tag_id varchar(20) FOREIGN KEY,
-    model varchar(25),
-    wattage int
-    PRIMARY KEY(id)
-);
-
-DROP TABLE IF EXISTS drives;
-CREATE TABLE drives (
-    id SERIAL,
-    machine_id INT FOREIGN KEY,
-    tag_id varchar(20) FOREIGN KEY,
-    model varchar(25),
-    size int, 
-    d_type varchar(5),  /* type was a keyword, so changed to d_type(AKA drive type)*/
-    interface varchar(25) /* interface string formating not known, update later*/
-    PRIMARY KEY(id)
-);
-
-DROP TABLE IF EXISTS display;
-CREATE TABLE display (
-    id SERIAL,
-    machine_id INT FOREIGN KEY,
-    tag_id varchar(20) FOREIGN KEY,
-    model varchar(25),
-    size int,
-    resolution varchar(10)
-    PRIMARY KEY(id)
+/* gpu_model table */
+DROP TABLE IF EXISTS gpu_model;
+CREATE TABLE gpu_model (
+    model_name varchar(20),
+    vram INT,
+    PRIMARY KEY(model_name)
 );
