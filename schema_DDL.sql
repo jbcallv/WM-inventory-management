@@ -8,9 +8,9 @@ CREATE TABLE tag (
 );
 
 /* manufacturer table */
-CREATE TABLE manufactuer (
+CREATE TABLE manufacturer (
     id SERIAL,
-    manufactuer_name varchar(20),
+    manufacturer_name varchar(20),
     PRIMARY KEY(id)
 );
 
@@ -48,7 +48,7 @@ CREATE TABLE m_made (
     FOREIGN KEY(machine_id)
         REFERENCES machine(id),
     FOREIGN KEY(manufacturer_id)
-        REFERENCES manufactuer(id)
+        REFERENCES manufacturer(id)
 );
 
 /* should be the relationship between component and machine but component will not be a table so
@@ -82,7 +82,7 @@ CREATE TABLE gpu (
     FOREIGN KEY(located_id)
         REFERENCES located_at (id),
     FOREIGN KEY(manufacturer_id)
-        REFERENCES manufactuer (id)
+        REFERENCES manufacturer (id)
 );
 
 /* relationship between gpu and component tables */
@@ -117,7 +117,7 @@ CREATE TABLE memory (
     FOREIGN KEY(located_id)
         REFERENCES located_at(id),
     FOREIGN KEY(manufacturer_id)
-        REFERENCES manufactuer(id)
+        REFERENCES manufacturer(id)
 );
 
 /* relationship between memory and component tables */
@@ -150,7 +150,7 @@ CREATE TABLE cpu (
     FOREIGN KEY(located_id)
         REFERENCES located_at(id),
     FOREIGN KEY(manufacturer_id)
-        REFERENCES manufactuer(id)
+        REFERENCES manufacturer(id)
 );
 
 /* relationship between cpu and component tables */
@@ -182,7 +182,7 @@ CREATE TABLE motherboard (
     FOREIGN KEY(located_id)
         REFERENCES located_at(id),
     FOREIGN KEY(manufacturer_id)
-        REFERENCES manufactuer(id)
+        REFERENCES manufacturer(id)
 );
 
 /* relationship between motherboard and component tables */
@@ -214,7 +214,7 @@ CREATE TABLE nc (
     FOREIGN KEY(located_id)
         REFERENCES located_at(id),
     FOREIGN KEY(manufacturer_id)
-        REFERENCES manufactuer(id)
+        REFERENCES manufacturer(id)
 );
 
 /* relationship between nc and component tables */
@@ -246,7 +246,7 @@ CREATE TABLE psu (
     FOREIGN KEY(located_id)
         REFERENCES located_at(id),
     FOREIGN KEY(manufacturer_id)
-        REFERENCES manufactuer(id)
+        REFERENCES manufacturer(id)
 );
 
 /* relationship between psu and component tables */
@@ -280,7 +280,7 @@ CREATE TABLE drives (
     FOREIGN KEY(located_id)
         REFERENCES located_at(id),
     FOREIGN KEY(manufacturer_id)
-        REFERENCES manufactuer(id)
+        REFERENCES manufacturer(id)
 );
 
 /* relationship between drives and component tables */
@@ -313,7 +313,7 @@ CREATE TABLE display (
     FOREIGN KEY(located_id)
         REFERENCES located_at(id),
     FOREIGN KEY(manufacturer_id)
-        REFERENCES manufactuer(id)
+        REFERENCES manufacturer(id)
 );
 
 /* relationship between display and component tables */
