@@ -95,11 +95,49 @@ CREATE TABLE gpu_model (
 
 /* relationship between gpu and component tables */
 DROP TABLE IF EXISTS gpu_tagged;
-CREATE TABLE tagged (
+CREATE TABLE gpu_tagged (
     gpu_id INT NOT NULL,
     tag_id INT,
     FOREIGN KEY(gpu_id)
         REFERENCES gpu(id),
+    FOREIGN KEY(tag_id)
+        REFERENCES tag(tag_id)
+);
+
+/* memory table */
+DROP TABLE IF EXISTS memory;
+CREATE TABLE memory (
+    id SERIAL,
+    model_name varchar(20),
+    located_id INT,
+    manufacturer_id INT,
+    PRIMARY KEY(id)
+    FOREIGN KEY(model_name)
+        REFERENCES memory_model(model_name),
+    FOREIGN KEY(located_id)
+        REFERENCES located_at(id),
+    FOREIGN KEY(manufacturer_id)
+        REFERENCES manufactuer(id)
+);
+
+/* memory_model table */
+DROP TABLE IF EXISTS memory_model;
+CREATE TABLE memory_model (
+    model_name varchar(20),
+    size INT,
+    type_generation varchar(6),
+    type_speed INT,
+    type_form_factor varchar(6),
+    PRIMARY KEY(model_name)
+);
+
+/* relationship between memory and component tables */
+DROP TABLE IF EXISTS memory_tagged;
+CREATE TABLE memory_tagged (
+    memory_id INT NOT NULL,
+    tag_id INT,
+    FOREIGN KEY(memory_id)
+        REFERENCES memory(id),
     FOREIGN KEY(tag_id)
         REFERENCES tag(tag_id)
 );
