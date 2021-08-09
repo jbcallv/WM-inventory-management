@@ -212,3 +212,38 @@ CREATE TABLE motherboard_tagged (
     FOREIGN KEY(tag_id)
         REFERENCES tag(tag_id)
 );
+
+/* nc table */
+DROP TABLE IF EXISTS nc;
+CREATE TABLE nc (
+    id SERIAL,
+    model_name varchar(20),
+    located_id INT,
+    manufacturer_id INT,
+    PRIMARY KEY(id)
+    FOREIGN KEY(model_name)
+        REFERENCES nc_model(model_name),
+    FOREIGN KEY(located_id)
+        REFERENCES located_at(id),
+    FOREIGN KEY(manufacturer_id)
+        REFERENCES manufactuer(id)
+);
+
+/* nc_model table */
+DROP TABLE IF EXISTS nc_model;
+CREATE TABLE nc_model (
+    model_name varchar(20),
+    nc_type varchar(15),
+    PRIMARY KEY(model_name)
+);
+
+/* relationship between nc and component tables */
+DROP TABLE IF EXISTS  nc_tagged;
+CREATE TABLE nc_tagged (
+    nc_id INT NOT NULL,
+    tag_id INT,
+    FOREIGN KEY(nc_id)
+        REFERENCES nc(id),
+    FOREIGN KEY(tag_id)
+        REFERENCES tag(tag_id)
+);
