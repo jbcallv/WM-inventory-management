@@ -25,17 +25,6 @@ CREATE TABLE located_at (
     PRIMARY KEY(id)
 );
 
-/* relationship between tag and component tables */
-DROP TABLE IF EXISTS tagged;
-CREATE TABLE tagged (
-    component_id INT,
-    tag_id INT,
-    FOREIGN KEY(component_id)
-        REFERENCES component(id),
-    FOREIGN KEY(tag_id)
-        REFERENCES tag(tag_id)
-);
-
 /* machine table */
 DROP TABLE IF EXISTS machine;
 CREATE TABLE machine (
@@ -75,7 +64,7 @@ CREATE TABLE in_machine (
     part_id INT,
     machine_id INT,
     FOREIGN KEY(part_id)
-        REFERENCES /* THERE IS NOC OMPONENT TABLE SO HOW DO WE MAKKE IT REFERENCE EVERY PART (E.G. GPU) TABLE */,
+        REFERENCES /* THERE IS NO COMPONENT TABLE SO HOW DO WE MAKKE IT REFERENCE EVERY PART (E.G. GPU) TABLE */,
     FOREIGN KEY(machine_id)
         REFERENCES machine(id)
 );
@@ -89,7 +78,7 @@ CREATE TABLE gpu (
     manufacturer_id INT,
     PRIMARY KEY(id)
     FOREIGN KEY(model_name)
-        REFERENCES(gpu_model),
+        REFERENCES gpu_model(model_name),
     FOREIGN KEY(located_id)
         REFERENCES located_at(id),
     FOREIGN KEY(manufacturer_id)
@@ -102,4 +91,15 @@ CREATE TABLE gpu_model (
     model_name varchar(20),
     vram INT,
     PRIMARY KEY(model_name)
+);
+
+/* relationship between gpu and component tables */
+DROP TABLE IF EXISTS gpu_tagged;
+CREATE TABLE tagged (
+    gpu_id INT NOT NULL,
+    tag_id INT,
+    FOREIGN KEY(gpu_id)
+        REFERENCES gpu(id),
+    FOREIGN KEY(tag_id)
+        REFERENCES tag(tag_id)
 );
