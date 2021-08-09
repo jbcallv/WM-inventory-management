@@ -39,8 +39,20 @@ insert into display_model values ('938RWOD', 27, '2560x1440');
 insert into display_model values ('985IOJE', 24, '1920×1200');
 insert into display_model values ('61732YW', 30, '2560x1600');
 
-insert into display values (DEFAULT, '938RWOD', 3, );
-insert into display values (DEFAULT, '985IOJE', 8, );
-insert into display values (DEFAULT, '61732YW', 6, );
-insert into display values (DEFAULT, '938RWOD', 4, );
-insert into display values (DEFAULT, '985IOJE', 2, );
+insert into display values (DEFAULT, '938RWOD', 3, 1);
+insert into display values (DEFAULT, '985IOJE', 8, 4);
+insert into display values (DEFAULT, '61732YW', 6, 5);
+insert into display values (DEFAULT, '938RWOD', 4, 7);
+insert into display values (DEFAULT, '985IOJE', 2, 2);
+
+insert into display_in_machine values (1, NULL);
+insert into display_in_machine values (2, 8);
+insert into display_in_machine values (3, NULL);
+insert into display_in_machine values (4, 4);
+insert into display_in_machine values (5, NULL);
+
+insert into display_tagged values (1, NULL);
+insert into display_tagged values (2, NULL);
+insert into display_tagged values (3, NULL);
+insert into display_tagged values (4, 'ET48011');
+insert into display_tagged values (5, NULL);
