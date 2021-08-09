@@ -141,3 +141,217 @@ CREATE TABLE memory_tagged (
     FOREIGN KEY(tag_id)
         REFERENCES tag(tag_id)
 );
+
+/* cpu table */
+DROP TABLE IF EXISTS cpu;
+CREATE TABLE cpu (
+    id SERIAL,
+    model_name varchar(20),
+    located_id INT,
+    manufacturer_id INT,
+    PRIMARY KEY(id)
+    FOREIGN KEY(model_name)
+        REFERENCES cpu_model(model_name),
+    FOREIGN KEY(located_id)
+        REFERENCES located_at(id),
+    FOREIGN KEY(manufacturer_id)
+        REFERENCES manufactuer(id)
+);
+
+/* cpu_model table */
+DROP TABLE IF EXISTS cpu_model;
+CREATE TABLE cpu_model (
+    model_name varchar(20),
+    threads INT, 
+    cores INT,
+    PRIMARY KEY(model_name)
+);
+
+/* relationship between cpu and component tables */
+DROP TABLE IF EXISTS cpu_tagged;
+CREATE TABLE cpu_tagged (
+    cpu_id INT NOT NULL,
+    tag_id INT,
+    FOREIGN KEY(cpu_id)
+        REFERENCES cpu(id),
+    FOREIGN KEY(tag_id)
+        REFERENCES tag(tag_id)
+);
+
+/* motherboard table */
+DROP TABLE IF EXISTS motherboard;
+CREATE TABLE motherboard (
+    id SERIAL,
+    model_name varchar(20),
+    located_id INT,
+    manufacturer_id INT,
+    PRIMARY KEY(id)
+    FOREIGN KEY(model_name)
+        REFERENCES motherboard_model(model_name),
+    FOREIGN KEY(located_id)
+        REFERENCES located_at(id),
+    FOREIGN KEY(manufacturer_id)
+        REFERENCES manufactuer(id)
+);
+
+/* motherboard_model table */
+DROP TABLE IF EXISTS motherboard_model;
+CREATE TABLE motherboard_model (
+    model_name varchar(20),
+    motherboard_type varchar(15),
+    PRIMARY KEY(model_name)
+);
+
+/* relationship between motherboard and component tables */
+DROP TABLE IF EXISTS motherboard_tagged;
+CREATE TABLE motherboard_tagged (
+    motherboard_id INT NOT NULL,
+    tag_id INT,
+    FOREIGN KEY(motherboard_id)
+        REFERENCES motherboard(id),
+    FOREIGN KEY(tag_id)
+        REFERENCES tag(tag_id)
+);
+
+/* nc table */
+DROP TABLE IF EXISTS nc;
+CREATE TABLE nc (
+    id SERIAL,
+    model_name varchar(20),
+    located_id INT,
+    manufacturer_id INT,
+    PRIMARY KEY(id)
+    FOREIGN KEY(model_name)
+        REFERENCES nc_model(model_name),
+    FOREIGN KEY(located_id)
+        REFERENCES located_at(id),
+    FOREIGN KEY(manufacturer_id)
+        REFERENCES manufactuer(id)
+);
+
+/* nc_model table */
+DROP TABLE IF EXISTS nc_model;
+CREATE TABLE nc_model (
+    model_name varchar(20),
+    nc_type varchar(15),
+    PRIMARY KEY(model_name)
+);
+
+/* relationship between nc and component tables */
+DROP TABLE IF EXISTS  nc_tagged;
+CREATE TABLE nc_tagged (
+    nc_id INT NOT NULL,
+    tag_id INT,
+    FOREIGN KEY(nc_id)
+        REFERENCES nc(id),
+    FOREIGN KEY(tag_id)
+        REFERENCES tag(tag_id)
+);
+
+/* psu table */
+DROP TABLE IF EXISTS psu;
+CREATE TABLE psu (
+    id SERIAL,
+    model_name varchar(20),
+    located_id INT,
+    manufacturer_id INT,
+    PRIMARY KEY(id)
+    FOREIGN KEY(model_name)
+        REFERENCES psu_model(model_name),
+    FOREIGN KEY(located_id)
+        REFERENCES located_at(id),
+    FOREIGN KEY(manufacturer_id)
+        REFERENCES manufactuer(id)
+);
+
+/* psu_model table */
+DROP TABLE IF EXISTS psu_model;
+CREATE TABLE psu_model (
+    model_name varchar(20),
+    wattage INT,
+    PRIMARY KEY(model_name)
+);
+
+/* relationship between psu and component tables */
+DROP TABLE IF EXISTS  psu_tagged;
+CREATE TABLE psu_tagged (
+    psu_id INT NOT NULL,
+    tag_id INT,
+    FOREIGN KEY(psu_id)
+        REFERENCES psu(id),
+    FOREIGN KEY(tag_id)
+        REFERENCES tag(tag_id)
+);
+
+/* drives table */
+DROP TABLE IF EXISTS drives;
+CREATE TABLE drives (
+    id SERIAL,
+    model_name varchar(20),
+    located_id INT,
+    manufacturer_id INT,
+    PRIMARY KEY(id)
+    FOREIGN KEY(model_name)
+        REFERENCES drives_model(model_name),
+    FOREIGN KEY(located_id)
+        REFERENCES located_at(id),
+    FOREIGN KEY(manufacturer_id)
+        REFERENCES manufactuer(id)
+);
+
+/* drives_model table */
+DROP TABLE IF EXISTS drives_model;
+CREATE TABLE drives_model (
+    model_name varchar(20),
+    size INT, 
+    drive_type varchar(15),
+    interface varchar(4),
+    PRIMARY KEY(model_name)
+);
+
+/* relationship between drives and component tables */
+DROP TABLE IF EXISTS  drives_tagged;
+CREATE TABLE drives_tagged (
+    drives_id INT NOT NULL,
+    tag_id INT,
+    FOREIGN KEY(drives_id)
+        REFERENCES drives(id),
+    FOREIGN KEY(tag_id)
+        REFERENCES tag(tag_id)
+);
+
+/* display table */
+DROP TABLE IF EXISTS display;
+CREATE TABLE display (
+    id SERIAL,
+    model_name varchar(20),
+    located_id INT,
+    manufacturer_id INT,
+    PRIMARY KEY(id)
+    FOREIGN KEY(model_name)
+        REFERENCES display_model(model_name),
+    FOREIGN KEY(located_id)
+        REFERENCES located_at(id),
+    FOREIGN KEY(manufacturer_id)
+        REFERENCES manufactuer(id)
+);
+
+/* display_model table */
+DROP TABLE IF EXISTS display_model;
+CREATE TABLE display_model (
+    model_name varchar(20),
+    display_size INT, 
+    resolution varchar(10)
+    PRIMARY KEY(model_name)
+);
+
+/* relationship between display and component tables */
+DROP TABLE IF EXISTS  display_tagged;
+CREATE TABLE display_tagged (
+    display_id INT NOT NULL,
+    tag_id INT,
+    FOREIGN KEY(display_id)
+        REFERENCES display(id),
+    FOREIGN KEY(tag_id)
+        REFERENCES tag(tag_id)
+);
