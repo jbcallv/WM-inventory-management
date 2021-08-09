@@ -1,4 +1,5 @@
 /* tag relation */
+/* DROP TABLE IF EXISTS tag */
 CREATE TABLE tag (
     tag_id varchar(8),
     vendor varchar(20),
@@ -51,18 +52,6 @@ CREATE TABLE m_made (
         REFERENCES manufacturer(id)
 );
 
-/* should be the relationship between component and machine but component will not be a table so
-how should we go about doing this? */
-/*DROP TABLE IF EXISTS in_machine;
-CREATE TABLE in_machine (
-    part_id INT,
-    machine_id INT,
-    FOREIGN KEY(part_id)
-        REFERENCES  THERE IS NO COMPONENT TABLE SO HOW DO WE MAKKE IT REFERENCE EVERY PART (E.G. GPU) TABLE ,
-    FOREIGN KEY(machine_id)
-        REFERENCES machine(id)
-);*/
-
 /* gpu_model table */
 CREATE TABLE gpu_model (
     model_name varchar(20),
@@ -84,6 +73,16 @@ CREATE TABLE gpu (
     FOREIGN KEY(manufacturer_id)
         REFERENCES manufacturer (id)
 );
+
+CREATE TABLE gpu_in_machine (
+    component_id INT,
+    machine_id INT,
+    FOREIGN KEY(component_id)
+        REFERENCES gpu(id),
+    FOREIGN KEY(machine_id)
+        REFERENCES machine(id)
+);
+
 
 /* relationship between gpu and component tables */
 CREATE TABLE gpu_tagged (
