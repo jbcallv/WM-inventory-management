@@ -247,3 +247,38 @@ CREATE TABLE nc_tagged (
     FOREIGN KEY(tag_id)
         REFERENCES tag(tag_id)
 );
+
+/* psu table */
+DROP TABLE IF EXISTS psu;
+CREATE TABLE psu (
+    id SERIAL,
+    model_name varchar(20),
+    located_id INT,
+    manufacturer_id INT,
+    PRIMARY KEY(id)
+    FOREIGN KEY(model_name)
+        REFERENCES psu_model(model_name),
+    FOREIGN KEY(located_id)
+        REFERENCES located_at(id),
+    FOREIGN KEY(manufacturer_id)
+        REFERENCES manufactuer(id)
+);
+
+/* psu_model table */
+DROP TABLE IF EXISTS psu_model;
+CREATE TABLE psu_model (
+    model_name varchar(20),
+    wattage INT,
+    PRIMARY KEY(model_name)
+);
+
+/* relationship between psu and component tables */
+DROP TABLE IF EXISTS  psu_tagged;
+CREATE TABLE psu_tagged (
+    psu_id INT NOT NULL,
+    tag_id INT,
+    FOREIGN KEY(psu_id)
+        REFERENCES psu(id),
+    FOREIGN KEY(tag_id)
+        REFERENCES tag(tag_id)
+);
