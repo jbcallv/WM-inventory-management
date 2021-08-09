@@ -282,3 +282,40 @@ CREATE TABLE psu_tagged (
     FOREIGN KEY(tag_id)
         REFERENCES tag(tag_id)
 );
+
+/* drives table */
+DROP TABLE IF EXISTS drives;
+CREATE TABLE drives (
+    id SERIAL,
+    model_name varchar(20),
+    located_id INT,
+    manufacturer_id INT,
+    PRIMARY KEY(id)
+    FOREIGN KEY(model_name)
+        REFERENCES drives_model(model_name),
+    FOREIGN KEY(located_id)
+        REFERENCES located_at(id),
+    FOREIGN KEY(manufacturer_id)
+        REFERENCES manufactuer(id)
+);
+
+/* drives_model table */
+DROP TABLE IF EXISTS drives_model;
+CREATE TABLE drives_model (
+    model_name varchar(20),
+    size INT, 
+    drive_type varchar(15),
+    interface varchar(4),
+    PRIMARY KEY(model_name)
+);
+
+/* relationship between drives and component tables */
+DROP TABLE IF EXISTS  drives_tagged;
+CREATE TABLE drives_tagged (
+    drives_id INT NOT NULL,
+    tag_id INT,
+    FOREIGN KEY(drives_id)
+        REFERENCES drives(id),
+    FOREIGN KEY(tag_id)
+        REFERENCES tag(tag_id)
+);
