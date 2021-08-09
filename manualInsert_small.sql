@@ -15,4 +15,17 @@ insert into manufacturer values ('amd')
 insert into manufacturer values ('intel')
 insert into manufacturer values ('supermicro')
 
-insert into 
+insert into located_at values ('blow', 225)
+insert into located_at values ('morton', 100)
+insert into located_at values ('jones', 113)
+insert into located_at values ('wren', 305)
+insert into located_at values ('morton', 401)
+insert into located_at values ('jones', 112)
+insert into located_at values ('wren', 115)
+insert into located_at values ('wren', 303)
+insert into located_at values ('morton', 421)
+insert into located_at values ('jones', 132)
+
+/*insert into machine values (1)
+insert into machine values (2)
+insert into machine values (3)*/
