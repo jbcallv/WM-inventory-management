@@ -141,3 +141,39 @@ CREATE TABLE memory_tagged (
     FOREIGN KEY(tag_id)
         REFERENCES tag(tag_id)
 );
+
+/* cpu table */
+DROP TABLE IF EXISTS cpu;
+CREATE TABLE cpu (
+    id SERIAL,
+    model_name varchar(20),
+    located_id INT,
+    manufacturer_id INT,
+    PRIMARY KEY(id)
+    FOREIGN KEY(model_name)
+        REFERENCES memory_model(model_name),
+    FOREIGN KEY(located_id)
+        REFERENCES located_at(id),
+    FOREIGN KEY(manufacturer_id)
+        REFERENCES manufactuer(id)
+);
+
+/* cpu_model table */
+DROP TABLE IF EXISTS cpu_model;
+CREATE TABLE cpu_model (
+    model_name varchar(20),
+    threads INT, 
+    cores INT,
+    PRIMARY KEY(model_name)
+);
+
+/* relationship between cpu and component tables */
+DROP TABLE IF EXISTS cpu_tagged;
+CREATE TABLE cpu_tagged (
+    cpu_id INT NOT NULL,
+    tag_id INT,
+    FOREIGN KEY(cpu_id)
+        REFERENCES cpu(id),
+    FOREIGN KEY(tag_id)
+        REFERENCES tag(tag_id)
+);
