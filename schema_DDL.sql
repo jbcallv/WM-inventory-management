@@ -319,3 +319,39 @@ CREATE TABLE drives_tagged (
     FOREIGN KEY(tag_id)
         REFERENCES tag(tag_id)
 );
+
+/* display table */
+DROP TABLE IF EXISTS display;
+CREATE TABLE display (
+    id SERIAL,
+    model_name varchar(20),
+    located_id INT,
+    manufacturer_id INT,
+    PRIMARY KEY(id)
+    FOREIGN KEY(model_name)
+        REFERENCES display_model(model_name),
+    FOREIGN KEY(located_id)
+        REFERENCES located_at(id),
+    FOREIGN KEY(manufacturer_id)
+        REFERENCES manufactuer(id)
+);
+
+/* display_model table */
+DROP TABLE IF EXISTS display_model;
+CREATE TABLE display_model (
+    model_name varchar(20),
+    display_size INT, 
+    resolution varchar(10)
+    PRIMARY KEY(model_name)
+);
+
+/* relationship between display and component tables */
+DROP TABLE IF EXISTS  display_tagged;
+CREATE TABLE display_tagged (
+    display_id INT NOT NULL,
+    tag_id INT,
+    FOREIGN KEY(display_id)
+        REFERENCES display(id),
+    FOREIGN KEY(tag_id)
+        REFERENCES tag(tag_id)
+);

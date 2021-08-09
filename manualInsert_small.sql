@@ -9,3 +9,10 @@ insert into tag values ('ET456123', 'newegg', 800, '2021-02-11')
 insert into tag values ('ET561234', 'newegg', 5000, '2016-11-18')
 insert into tag values ('ET612345', 'newegg', 1873, '2015-05-05')
 insert into tag values ('ET172631', 'newegg', 1893, '2020-07-17')
+
+insert into manufacturer values ('nvidia')
+insert into manufacturer values ('amd')
+insert into manufacturer values ('intel')
+insert into manufacturer values ('supermicro')
+
+insert into 
