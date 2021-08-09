@@ -151,7 +151,7 @@ CREATE TABLE cpu (
     manufacturer_id INT,
     PRIMARY KEY(id)
     FOREIGN KEY(model_name)
-        REFERENCES memory_model(model_name),
+        REFERENCES cpu_model(model_name),
     FOREIGN KEY(located_id)
         REFERENCES located_at(id),
     FOREIGN KEY(manufacturer_id)
@@ -174,6 +174,41 @@ CREATE TABLE cpu_tagged (
     tag_id INT,
     FOREIGN KEY(cpu_id)
         REFERENCES cpu(id),
+    FOREIGN KEY(tag_id)
+        REFERENCES tag(tag_id)
+);
+
+/* motherboard table */
+DROP TABLE IF EXISTS motherboard;
+CREATE TABLE motherboard (
+    id SERIAL,
+    model_name varchar(20),
+    located_id INT,
+    manufacturer_id INT,
+    PRIMARY KEY(id)
+    FOREIGN KEY(model_name)
+        REFERENCES motherboard_model(model_name),
+    FOREIGN KEY(located_id)
+        REFERENCES located_at(id),
+    FOREIGN KEY(manufacturer_id)
+        REFERENCES manufactuer(id)
+);
+
+/* motherboard_model table */
+DROP TABLE IF EXISTS motherboard_model;
+CREATE TABLE motherboard_model (
+    model_name varchar(20),
+    motherboard_type varchar(15),
+    PRIMARY KEY(model_name)
+);
+
+/* relationship between motherboard and component tables */
+DROP TABLE IF EXISTS motherboard_tagged;
+CREATE TABLE motherboard_tagged (
+    motherboard_id INT NOT NULL,
+    tag_id INT,
+    FOREIGN KEY(motherboard_id)
+        REFERENCES motherboard(id),
     FOREIGN KEY(tag_id)
         REFERENCES tag(tag_id)
 );
