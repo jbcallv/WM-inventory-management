@@ -1,4 +1,5 @@
 import psycopg2
+from psycopg2 import sql
 
 # creates a connection to the database
 database_connection = psycopg2.connect(host='localhost', port=5432, dbname="ims_small", \
@@ -11,13 +12,16 @@ valid_options = ['a', 'b', 'c', 'd']
 entity_type = ""
 valid_types = ["system", "component"]
 
-componentLocationQuery = ""
-componentManufacturerQuery = ""
-componentPurchaseInformationQuery = ""
+selected_component = ""
+valid_components = ["gpu", "memory", "cpu", "motherboard", "nc", "psu", "drives", "display"]
 
-systemLocationQuery = ""
-systemManufacturererQuery = ""
-systemPurchaseInformationQuery = ""
+id_of_entity = ""
+
+locationQuery = "select building, room_number from {} join located_at on {}.located_id=located_at.id where {}.id={};"
+manufacturerQuery = "select manufacturer_name from {} join manufacturer on manufacturer_id=manufacturer.id where {}.id={};"
+purchaseInformationQuery = "select vendor, purchase_price, purchase_date from {}_tagged natural join tag where {}_id={};"
+
+systemManufacturerQuery = "select manufacturer_name from {} join manufacturer on manufacturer_id=manufacturer.id where machine_id={};"
 
 # interface functions
 def showMenuOptions():
@@ -30,7 +34,21 @@ def showMenuOptions():
     print("d) quit at any time")
     print()
 
-def handleInput():
+def showComponentOptions():
+    print()
+    print("Select a compoment")
+    print()
+    print("gpu")
+    print("memory")
+    print("cpu")
+    print("motherboard")
+    print("nc")
+    print("psu")
+    print("drive")
+    print("display")
+    print()
+
+def handleComponentInput():
     if entity_type == "component" and selected_option == "a":
         findLocationOfComponent()
     elif entity_type == "component" and selected_option == "b":
@@ -38,12 +56,13 @@ def handleInput():
     elif entity_type == "component" and selected_option == "c":
         findPurchaseInformationForComponent()
 
-    elif entity_type == "system" and selected_option == "a":
+def handleSystemInput():
+    if entity_type == "system" and selected_option == "a":
         findLocationOfSystem()
     elif entity_type == "system" and selected_option == "b":
         findManufacturerOfSystem()
     elif entity_type == "system" and selected_option == "c":
-        findPurchaseInformationForSystem()
+        findPurchaseInformationForSystem()   
 
 def checkInvalidInput(inputs, valid_inputs):
     if inputs not in valid_inputs:
@@ -57,27 +76,91 @@ def quitIfKeyPressed(key_pressed):
 
 # component functions
 def findLocationOfComponent():
-    #try:
-    #except Exception as e:
-    #print(e)
-    pass
+    try:
+        query = locationQuery.format(selected_component, selected_component, selected_component, id_of_entity)# = "select building, room_number from {} join located_at on {}.located_id=located_at.id where {}.id={};".format(selected_component, selected_component, selected_component, str(id_of_entity))
+
+        cursor.execute(query)
+        #cursor.execute(sql.SQL(componentLocationQuery).format(sql.Identifier(selected_component, selected_component, selected_component)), [id_of_entity])
+        database_connection.commit()
+        component_Location = list(cursor)
+        if len(component_Location) > 0:
+            print("The {} is located in".format(selected_component),  component_Location[0][0], "room number", component_Location[0][1])
+        else:
+            print("The location of this component is unknown.")
+    except Exception as e:
+        print(e)
 
 def findManufacturerOfComponent():
-    pass
+    try:
+        query = manufacturerQuery.format(selected_component, selected_component, id_of_entity)
+        cursor.execute(query)
+        database_connection.commit()
+        manufacturer_information = list(cursor)
+        if len(manufacturer_information) > 0:
+            print("The {} with id {} is manufactured by".format(selected_component, id_of_entity), manufacturer_information[0][0])
+        else:
+            print("The manufacturer of this component is unknown.")
+    except Exception as e:
+        print(e)
 
 def findPurchaseInformationForComponent():
-    pass
+    try:
+        query = purchaseInformationQuery.format(selected_component, selected_component, id_of_entity)
+        cursor.execute(query)
+        database_connection.commit()
+        purchase_information = list(cursor)
+        if len(purchase_information) > 0:
+            print("vendor: {}".format(purchase_information[0][0]))
+            print("purchase price: {}".format(purchase_information[0][1]))
+            print("purchase date: {}".format(purchase_information[0][2]))
+        else:
+            print("The purchase information for this component is unknown.")
+    except Exception as e:
+        print(e)
+
 
 # system functions
 def findLocationOfSystem():
-    pass
+    try:
+        query = locationQuery.format("machine", "machine", "machine", id_of_entity)# = "select building, room_number from {} join located_at on {}.located_id=located_at.id where {}.id={};".format(selected_component, selected_component, selected_component, str(id_of_entity))
+
+        cursor.execute(query)
+        database_connection.commit()
+        component_Location = list(cursor)
+        if len(component_Location) > 0:
+            print("The {} is located in".format("system"),  component_Location[0][0], "room number", component_Location[0][1])
+        else:
+            print("The location of this component is unknown.")
+    except Exception as e:
+        print(e)
 
 def findManufacturerOfSystem():
-    pass
+    try:
+        query = systemManufacturerQuery.format("m_made", id_of_entity)
+        cursor.execute(query)
+        database_connection.commit()
+        manufacturer_information = list(cursor)
+        if len(manufacturer_information) > 0:
+            print("The {} with id {} is manufactured by".format("system", id_of_entity), manufacturer_information[0][0])
+        else:
+            print("The manufacturer of this component is unknown.")
+    except Exception as e:
+        print(e)
 
 def findPurchaseInformationForSystem():
-    pass
-
+    try:
+        query = purchaseInformationQuery.format("m", "machine", id_of_entity)
+        cursor.execute(query)
+        database_connection.commit()
+        purchase_information = list(cursor)
+        if len(purchase_information) > 0:
+            print("vendor: {}".format(purchase_information[0][0]))
+            print("purchase price: {}".format(purchase_information[0][1]))
+            print("purchase date: {}".format(purchase_information[0][2]))
+        else:
+            print("The purchase information for this component is unknown.")
+    except Exception as e:
+        print(e)
 
 
 # loop that runs menu
@@ -87,8 +170,22 @@ while True:
     quitIfKeyPressed(selected_option)
 
     if checkInvalidInput(selected_option, valid_options) != 0:
-        entity_type = input("System or a component? ").lower()
+        entity_type = input("system or a component? ").lower()
         quitIfKeyPressed(entity_type)
-        checkInvalidInput(entity_type, valid_types)
+        if checkInvalidInput(entity_type, valid_types) != 0:
 
-        handleInput()
+            id_of_entity = input("Enter the id of this entity: ")
+            quitIfKeyPressed(id_of_entity)
+            # confirm is number here
+            id_of_entity = int(id_of_entity)
+
+            if entity_type == "component":
+                showComponentOptions()
+                selected_component = input("Component name: ")
+                quitIfKeyPressed(selected_component)
+                
+                if checkInvalidInput(selected_component, valid_components) != 0:
+                    handleComponentInput()
+
+            if entity_type == "system":
+                handleSystemInput()
