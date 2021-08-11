@@ -165,7 +165,6 @@ while True:
 
             id_of_entity = input("Enter the id of this entity: ")
             quitIfKeyPressed(id_of_entity)
-            # confirm is number here
             if id_of_entity.strip().isdigit():
                 id_of_entity = int(id_of_entity)
 
