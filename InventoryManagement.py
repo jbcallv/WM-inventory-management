@@ -39,7 +39,7 @@ def showComponentOptions():
     print("motherboard")
     print("nc")
     print("psu")
-    print("drive")
+    print("drives")
     print("display")
     print()
 
@@ -77,9 +77,12 @@ def findLocationOfSystem():
 def executeLocationQuery(query):
     cursor.execute(query)
     database_connection.commit()
-    parseable_location = list(cursor)
-    if len(parseable_location) > 0:
-        print("The {} is located in".format(entity_type),  parseable_location[0][0], "room number", parseable_location[0][1])
+    location_information = list(cursor)
+    ouptutLocationInformation(location_information)
+
+def ouptutLocationInformation(location_information):
+    if len(location_information) > 0:
+        print("The {} is located in".format(entity_type),  location_information[0][0], "room number", location_information[0][1])
     else:
         print("The location of this {} is unknown.".format(entity_type))
 
