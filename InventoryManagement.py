@@ -5,7 +5,7 @@ database_connection = psycopg2.connect(host='localhost', port=5432, dbname="ims_
 cursor = database_connection.cursor()
 
 selected_option = ""
-valid_options = ['a', 'b', 'c', 'd']
+valid_options = ['a', 'b', 'c', 'q']
 
 entity_type = ""
 valid_types = ["system", "component"]
@@ -23,10 +23,10 @@ def showMenuOptions():
     print()
     print("Please make a selection")
     print()
-    print("a) get the location of a system/component")
-    print("b) get manufacturer information for a system/component")
-    print("c) get purchase information for a system/component")
-    print("d) quit at any time")
+    print("a) get the location of a system or component")
+    print("b) get manufacturer information for a system or component")
+    print("c) get purchase information for a system or component")
+    print("q) quit at any time")
     print()
 
 def showComponentOptions():
@@ -42,7 +42,6 @@ def showComponentOptions():
     print("drives")
     print("display")
     print()
-
 
 def handleComponentInput():
     if entity_type == "component" and selected_option == "a":
@@ -140,7 +139,6 @@ def outputPurchaseInformation(purchase_information):
     else:
         print("The purchase information for this {} is unknown.".format(entity_type))
 
-
 def checkInvalidInput(inputs, valid_inputs):
     if inputs not in valid_inputs:
         print("Invalid input")
@@ -148,7 +146,7 @@ def checkInvalidInput(inputs, valid_inputs):
         return True
 
 def quitIfKeyPressed(key_pressed):
-    if key_pressed == "d":
+    if key_pressed == "q":
         exit()
 
 while True:
